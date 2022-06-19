@@ -1,0 +1,8 @@
+pandas
+matplotlib
+bs4
+requests
+spotipy
+lyricsgenius
+pathlib
+nltk
