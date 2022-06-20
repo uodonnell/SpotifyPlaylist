@@ -6,7 +6,8 @@ import requests
 import numpy as np
 import re
 
-def initialize_spotify(cid,secret):
+
+def initialize_client(cid,secret):
     client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
     sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
     return sp
@@ -86,22 +87,22 @@ def get_track_info(sp, df):
     return track_info
 
 
-def main():
-    cid = '1d668be1930e487eaacd284df4fa7601'
-    secret = '08ac712c04ba4bffaeb232efe98a7a54'
+# def main():
+#     cid = '1d668be1930e487eaacd284df4fa7601'
+#     secret = '08ac712c04ba4bffaeb232efe98a7a54'
 
-    info = pd.read_csv("data/data_with_spotify_ids.csv")
-    info = info.drop("Unnamed: 0",axis=1)
-    info = info.drop("Unnamed: 0.1",axis=1)
-    sp = initialize_spotify(cid, secret)
-    track_info = get_track_info(sp, info)
-    # there are one or two songs that dont have data on anything, so
-    # drop it based on one column, wont matter
-    track_info = track_info.dropna(subset = ["danceability"])
-    all_info = pd.merge(info, track_info, on = "sp_id")
-    all_info.to_csv("data/audio_and_lyric_data.csv")
+#     info = pd.read_csv("data/data_with_spotify_ids.csv")
+#     info = info.drop("Unnamed: 0",axis=1)
+#     info = info.drop("Unnamed: 0.1",axis=1)
+#     sp = initialize_client_spotify(cid, secret)
+#     track_info = get_track_info(sp, info)
+#     # there are one or two songs that dont have data on anything, so
+#     # drop it based on one column, wont matter
+#     track_info = track_info.dropna(subset = ["danceability"])
+#     all_info = pd.merge(info, track_info, on = "sp_id")
+#     all_info.to_csv("data/audio_and_lyric_data.csv")
     
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
