@@ -70,16 +70,17 @@ def get_top_artist_songs(artists):
             counter += 1
             continue
 
-def main():
-    # already have cleaned data but this function made it
-    # also produces visualization
-    get_top_artists()
 
-    artists = pd.read_csv("top_artists.csv")
-    # change iloc to 500:___ to get past the top 500 artists
-    get_top_artist_songs(artists["artist_mb"].iloc[0:500].to_list())
+# def main():
+#     # already have cleaned data but this function made it
+#     # also produces visualization
+#     get_top_artists()
+
+#     artists = pd.read_csv("top_artists.csv")
+#     # change iloc to 500:___ to get past the top 500 artists
+#     get_top_artist_songs(artists["artist_mb"].iloc[0:500].to_list())
 
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

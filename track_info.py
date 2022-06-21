@@ -47,7 +47,7 @@ def inject_song_id(sp, info):
                                else search_for_song(sp, x['artist_mb'], x['song_name']), axis = 1)
     # after this there were 79 missing id's, so I just removed them
     info = info.dropna(subset = ["sp_id"])
-    return df
+    return info
 
 
 def get_track_info(sp, df):
