@@ -141,6 +141,9 @@ def add_audio_features(df,sp):
 
 def update_df():
     df = pd.read_csv("data/audio_and_lyric_data.csv")
+    df["song_name"] = df["song_name"].apply(lambda x: x.lower().strip())
+    df["artist_mb"] = df["artist_mb"].apply(lambda x: x.lower().strip())
+    df = df.drop_duplicates(subset = ["song_name"], keep = 'first')
     return df
 
 def add_new_songs():
