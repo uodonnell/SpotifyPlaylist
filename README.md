@@ -1,1 +1,2 @@
-# SpotifyPlaylist
+# Music Reccomendation Based on Query and Song Similarity
+The goal of this project is to make finding music easier. I gathered lyrical data from the Genius API as well as audio feature data from the Spotify API, using different methods to create vectors and measure distance between each song to find similarities.

@@ -8,6 +8,9 @@ import re
 
 
 def initialize_client(cid,secret):
+    """
+    Creates a spotify api client, so I can access data from the API
+    """
     client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
     sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
     return sp
@@ -30,13 +33,21 @@ def search_for_song(sp, artist, song_name):
     return songs["tracks"]["items"][0]["id"]
 
 def clean_song(sp_id, song):
-    #print(sp_id)
+    """
+    Gets rid of punctuation in the song name
+    """
+    # This checks for NoneType
     if sp_id == sp_id:
         return song
     new = re.sub(r'[^\w\s]', '', song)
     return new
 
 def inject_song_id(sp, info):
+    """
+    Makes calls to spotify API to get the unique id of each song in the dataframe
+    and inserts them into a new column into the dataframe.
+    Any songs that were unsuccesful were removed from data.
+    """
     info["sp_id"] = info.apply(lambda x: search_for_song(sp, x["artist_mb"], x["song_name"]), axis = 1)
 
     # Only 139 songs out of over 2000 have missing IDs, and many of them had punctuation, 

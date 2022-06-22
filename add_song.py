@@ -23,6 +23,10 @@ genius.verbose = True # turn off verbose output, could be useful to debug though
 
 
 def add_artist(artist):
+    """
+    This function will gather lyrical data of a specified artists top 5 
+    most popular songs, storing each song in a file.
+    """
     counter = 1
     # if 10 request fail in a row just stop
     while counter != 10:
@@ -43,6 +47,10 @@ def add_artist(artist):
             continue
 
 def extract_info(text, doc_name, details):
+    """
+    Get the artist name, song name and lyrics from given text.
+    Updates the details dataframe.
+    """
     # The format for Happy by Pharrell for example would be :
     # Happy Lyrics
     # {Song Lyrics}
@@ -61,6 +69,10 @@ def extract_info(text, doc_name, details):
     details["lyrics"].append(lyrics)
 
 def read_docs(input_dir):
+    """
+    Reads each doc in a specific directory, where each doc contains lyrics
+    and other song information.
+    """
     details = {
         "artist_mb": [],
         "song_name": [],
@@ -77,6 +89,9 @@ def read_docs(input_dir):
     return df
 
 def remove_stopwords(df):
+    """
+    Reads stopwords file and removes words from lyrics.
+    """
     stop = set()
     with open('data/stopwords.txt', 'r') as f:
         for line in f:
@@ -88,12 +103,19 @@ def remove_stopwords(df):
     return df
 
 def add_tokens(df):
+    """
+    Injects tokens of lyrics.
+    "I want to party" -> ["I", "want", "to", "party"]
+    """
     analyze = TfidfVectorizer().build_analyzer()
     df['tokens'] = df['lyrics_nostop'].apply(analyze)
     df = df.drop(['lyrics'], axis=1)
     return df
 
 def add_lyrics(sp,artist):
+    """
+    Adds lyrics and does all preprocessing for specified artist
+    """
     add_artist(artist)
     print("Lyrics added in new files!")
     df = read_docs('new_lyrics/')
@@ -140,6 +162,10 @@ def add_audio_features(df,sp):
     return track_info
 
 def update_df():
+    """
+    Reads in old data, and updates a dataframe to include the artist
+    that was added.
+    """
     df = pd.read_csv("data/audio_and_lyric_data.csv")
     df["song_name"] = df["song_name"].apply(lambda x: x.lower().strip())
     df["artist_mb"] = df["artist_mb"].apply(lambda x: x.lower().strip())
@@ -147,6 +173,10 @@ def update_df():
     return df
 
 def add_new_songs():
+    """
+    Connects to spotify and genius, and adds new lyric and audio data
+    to the csv containing all the information.
+    """
     cid = '1d668be1930e487eaacd284df4fa7601'
     secret = '08ac712c04ba4bffaeb232efe98a7a54'
     sp = initialize_client(cid, secret)

@@ -14,6 +14,12 @@ genius.verbose = False # turn off verbose output, could be useful to debug thoug
 
 # call this once to build top_artists.csv file that is much smaller than original dataframe
 def get_top_artists():
+    """
+    This function reads in top artist data from kaggle dataset, extracting specific
+    columns that will be helpful.
+
+    Additionally it will build a visualization for the types of music present in the data.
+    """
     # source of data : https://www.kaggle.com/datasets/pieca111/music-artists-popularity
     all_artists = pd.read_csv("artists.csv", low_memory = False)
     # get rid of artists that have the same name
@@ -50,7 +56,11 @@ def get_top_artists():
 
 
 def get_top_artist_songs(artists):
-    # functions as a queue because sometimes requests time out but somtimes they work
+    """
+    Makes API calls to Genius and grabs lyrical information, storing each songs lyrics
+    in a txt file
+    """
+    # functions as a queue because sometimes requests time out but sometimes they work
     # stop when failures exceed 40 or there are no artists left
     counter = 0
     while len(artists) != 0 and counter != 40:
